@@ -14,9 +14,9 @@ const App = () => {
   return (
     <div>
       <h1>Give feedback</h1>
-      <button onClick={increaseGood}>Good</button>
-      <button onClick={increaseNeutral}>Neutral</button>
-      <button onClick={increaseBad}>Bad</button>
+      <Button onClick={increaseGood}>Good</Button>
+      <Button onClick={increaseNeutral}>Neutral</Button>
+      <Button onClick={increaseBad}>Bad</Button>
       <h1>Statistics</h1>
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
@@ -33,15 +33,22 @@ const Statistics = ({ good, neutral, bad }) => {
 
   return (
     <>
-      <p>Good: {good}</p>
-      <p>Neutral: {neutral}</p>
-      <p>Bad: {bad}</p>
-      <p>All: {total}</p>
-      <p>Average: {average}</p>
-      <p>Positive: {positive} %</p>
+      <StatisticLine text="Good" value={good} />
+      <StatisticLine text="Neutral" value={neutral} />
+      <StatisticLine text="Bad" value={bad} />
+      <StatisticLine text="All" value={total} />
+      <StatisticLine text="Average" value={average} />
+      <StatisticLine text="Positive" value={positive} />
     </>
   )
 }
 
+const Button = ({ onClick, children }) => {
+  return <button onClick={onClick}>{children}</button>
+}
+
+const StatisticLine = ({text, value}) => {
+  return <p>{text}: {value}</p>
+}
 
 export default App
