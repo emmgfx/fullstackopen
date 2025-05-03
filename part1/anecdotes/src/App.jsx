@@ -13,14 +13,14 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
-  const [votes, setVotes] = useState({});
+  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0));
 
   const getRandomIndex = () => Math.floor(Math.random() * anecdotes.length);
   const setRandomAnecdote = () => setSelected(getRandomIndex());
 
   const vote = (anecdoteIndex) => {
-    const newVotes = { ...votes };
-    newVotes[anecdoteIndex] = (votes[anecdoteIndex] || 0) + 1
+    const newVotes = [...votes];
+    newVotes[anecdoteIndex] = votes[anecdoteIndex] += 1
     setVotes(newVotes)
   }
   
