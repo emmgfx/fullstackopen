@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import axios from "axios";
+
+import personsService from "./personService";
 
 import { Persons } from "./components/Persons";
 import { PersonForm } from "./components/PersonForm";
@@ -25,9 +26,12 @@ const App = () => {
       return;
     }
 
-    setPersons([...persons, { name: newName, number: newNumber }]);
-    setNewName("");
-    setNewNumber("");
+    personsService.create({ name: newName, number: newNumber }).then((newPerson) => {
+      setPersons([...persons, newPerson]);
+      setNewName("");
+      setNewNumber("");  
+    })
+
   }
 
   const filteredList = filter.length > 0
