@@ -13,9 +13,7 @@ const App = () => {
   const [persons, setPersons] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
-      setPersons(response.data);
-    })
+    personsService.getAll().then((persons) => setPersons(persons));
   }, []);
 
   const handleSubmit = (event) => {
