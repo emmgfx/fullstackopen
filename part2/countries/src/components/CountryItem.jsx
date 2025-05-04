@@ -1,5 +1,5 @@
-export const CountryItem = ({ name }) => {
+export const CountryItem = ({ name, show }) => {
   return (
-    <li>{name}</li>
+    <li>{name} <button onClick={() => show(name)}>Show</button></li>
   );
 }

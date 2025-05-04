@@ -1,7 +1,7 @@
 import { CountryItem } from "./CountryItem";
 import { CountryDetail } from "./CountryDetail";
 
-export const Result = ({ term, countries }) => {
+export const Result = ({ term, countries, show }) => {
 
   if(countries.length === 0 || term.length === 0){
     return <p>No matches, specifiy another filter</p>;
@@ -28,7 +28,7 @@ export const Result = ({ term, countries }) => {
   return (
     <ul>
       {countries.map((country) => {
-        return <CountryItem key={country.cca2} name={country.name.common} />
+        return <CountryItem key={country.cca2} name={country.name.common} show={show} />
       })}
     </ul>
   );
