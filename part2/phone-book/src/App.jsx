@@ -29,7 +29,14 @@ const App = () => {
       setNewName("");
       setNewNumber("");  
     })
+  }
 
+  const removePerson = (id) => {
+    const selectedPerson = persons.find((person) => person.id === id);
+    if(!window.confirm(`Delete ${selectedPerson.name}?`)) return;
+    personsService.remove(id).then((removedPerson) => {
+      setPersons(persons.filter((person) => person.id !== removedPerson.id))
+    })
   }
 
   const filteredList = filter.length > 0
@@ -51,7 +58,7 @@ const App = () => {
       />
 
       <h2>Numbers</h2>
-      <Persons persons={filteredList} />
+      <Persons persons={filteredList} removePerson={removePerson} />
     </div>
   )
 }
