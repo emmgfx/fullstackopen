@@ -5,16 +5,23 @@ import personsService from "./personService";
 import { Persons } from "./components/Persons";
 import { PersonForm } from "./components/PersonForm";
 import { FilterForm } from "./components/FilterForm";
+import { Notification } from './components/Notification';
 
 const App = () => {
   const [filter, setFilter] = useState('');
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [persons, setPersons] = useState([]);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
     personsService.getAll().then((persons) => setPersons(persons));
   }, []);
+
+  const successNotification = (message) => {
+    setSuccessMessage(message);
+    setTimeout(() => { setSuccessMessage(null); }, 5000);
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -32,6 +39,7 @@ const App = () => {
           setPersons(newPersonsArray);
           setNewName("");
           setNewNumber("");
+          successNotification(`Updated ${updatedPerson.name}`);
         })
       }
       return;
@@ -41,6 +49,7 @@ const App = () => {
       setPersons([...persons, newPerson]);
       setNewName("");
       setNewNumber("");  
+      successNotification(`Added ${newPerson.name}`);
     })
   }
 
@@ -59,6 +68,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification message={successMessage} />
       <FilterForm filter={filter} setFilter={setFilter} />
 
       <h2>Add a new</h2>
