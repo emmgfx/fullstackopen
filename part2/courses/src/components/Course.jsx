@@ -1,9 +1,14 @@
 export const Course = ({ course }) => {
+
+  const exercisesCount = course.parts.reduce((prevCount, part) => {
+    return prevCount + part.exercises;
+  }, 0);
+
   return (
     <div>
       <Header course={course.name} />
       <Content parts={course.parts} />
-      {/* <Total parts={course.parts} /> */}
+      <Total exercisesCount={exercisesCount} />
     </div>
 
   );
@@ -29,6 +34,6 @@ const Part = ({ part, exercises }) => {
   );
 };
 
-const Total = ({ parts }) => {
-  return <p>Number of exercises {parts[0].exercises + parts[1].exercises + parts[2].exercises}</p>;
+const Total = ({ exercisesCount }) => {
+  return <p><strong>Total of {exercisesCount} exercises</strong></p>;
 };
