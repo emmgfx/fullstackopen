@@ -21,6 +21,8 @@ export const Result = ({ term, countries, show }) => {
         languages={country.languages}
         flag={country.flags.svg}
         flagAlt={country.flags.alt}
+        latitude={country.latlng[0]}
+        longitude={country.latlng[1]}
       />
     )
   }
