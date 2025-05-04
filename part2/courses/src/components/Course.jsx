@@ -15,7 +15,7 @@ export const Course = ({ course }) => {
 }
 
 const Header = ({ course }) => {
-  return <h1>{course}</h1>;
+  return <h2>{course}</h2>;
 };
 
 const Content = ({ parts }) => {
