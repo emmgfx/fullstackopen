@@ -13,16 +13,24 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [persons, setPersons] = useState([]);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     personsService.getAll().then((persons) => setPersons(persons));
   }, []);
 
-  const successNotification = (message) => {
-    setSuccessMessage(message);
-    setTimeout(() => { setSuccessMessage(null); }, 5000);
+  const notification = (type, message) => {
+    setSuccessMessage(null);
+    setErrorMessage(null);
+    
+    if(type === "success"){
+      setSuccessMessage(message);
+      setTimeout(() => { setSuccessMessage(null); }, 5000);
+    }else if(type === "error"){
+      setErrorMessage(message);
+      setTimeout(() => { setErrorMessage(null); }, 5000);
+    }
   }
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -39,7 +47,7 @@ const App = () => {
           setPersons(newPersonsArray);
           setNewName("");
           setNewNumber("");
-          successNotification(`Updated ${updatedPerson.name}`);
+          notification("success", `Updated ${updatedPerson.name}`);
         })
       }
       return;
@@ -49,7 +57,7 @@ const App = () => {
       setPersons([...persons, newPerson]);
       setNewName("");
       setNewNumber("");  
-      successNotification(`Added ${newPerson.name}`);
+      notification("success", `Added ${newPerson.name}`);
     })
   }
 
@@ -58,6 +66,9 @@ const App = () => {
     if(!window.confirm(`Delete ${selectedPerson.name}?`)) return;
     personsService.remove(id).then((removedPerson) => {
       setPersons(persons.filter((person) => person.id !== removedPerson.id))
+    }).catch((error) => {
+      notification("error", `Information of ${selectedPerson.name} has already been removed from server`);
+      setPersons(persons.filter((person) => person.id !== id))
     })
   }
 
@@ -68,7 +79,8 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      <Notification message={successMessage} />
+      <Notification type="success" message={successMessage} />
+      <Notification type="error" message={errorMessage} />
       <FilterForm filter={filter} setFilter={setFilter} />
 
       <h2>Add a new</h2>

@@ -1,10 +1,10 @@
-export const Notification = ({ message }) => {
+export const Notification = ({ type, message }) => {
   if (message === null) {
     return null
   }
 
   return (
-    <div className="notification success">
+    <div className={"notification " + type}>
       {message}
     </div>
   )
