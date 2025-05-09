@@ -54,6 +54,21 @@ app.delete("/api/persons/:id", (request, response) => {
 app.post("/api/persons", (request, response) => {
   const { name, number } = request.body;
 
+  if (!name) {
+    response.status(400).json({ error: "name is required" });
+    return;
+  }
+
+  if (!number) {
+    response.status(400).json({ error: "number is required" });
+    return;
+  }
+
+  if (persons.some((person) => person.name === name)) {
+    response.status(400).json({ error: "name must be unique" });
+    return;
+  }
+
   const newPerson = {
     id: Math.floor(Math.random() * 100000000),
     name,
@@ -61,7 +76,7 @@ app.post("/api/persons", (request, response) => {
   };
 
   persons.push(newPerson);
-  response.json({ newPerson });
+  response.status(201).json(newPerson);
 });
 
 app.get("/info", (request, response) => {
