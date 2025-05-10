@@ -97,6 +97,29 @@ app.post("/api/persons", (request, response, next) => {
     .catch((error) => next(error));
 });
 
+app.put("/api/persons/:id", (request, response, next) => {
+  const { id } = request.params;
+  const { name, number } = request.body;
+
+  if (!name) {
+    response.status(400).json({ error: "name is required" });
+    return;
+  }
+
+  if (!number) {
+    response.status(400).json({ error: "number is required" });
+    return;
+  }
+
+  const person = { name, number };
+
+  Person.findByIdAndUpdate(id, person, { new: true })
+    .then((updatedPerson) => {
+      response.status(202).json(updatedPerson);
+    })
+    .catch((error) => next(error));
+});
+
 app.get("/info", (request, response) => {
   response.send(
     `<p>Phonebook has info for ${persons.length} people</p><p>${new Date()}</p>`
