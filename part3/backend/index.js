@@ -66,13 +66,9 @@ app.get("/api/persons/:id", (request, response) => {
 
 app.delete("/api/persons/:id", (request, response) => {
   const id = request.params.id;
-  const person = persons.find((person) => Number(person.id) === Number(id));
-  if (person) {
-    persons = persons.filter((person) => Number(person.id) !== Number(id));
+  Person.findByIdAndDelete(id).then(() => {
     response.status(204).end();
-  } else {
-    response.status(404).end();
-  }
+  });
 });
 
 app.post("/api/persons", (request, response) => {

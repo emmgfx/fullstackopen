@@ -64,8 +64,8 @@ const App = () => {
   const removePerson = (id) => {
     const selectedPerson = persons.find((person) => person.id === id);
     if(!window.confirm(`Delete ${selectedPerson.name}?`)) return;
-    personsService.remove(id).then((removedPerson) => {
-      setPersons(persons.filter((person) => person.id !== removedPerson.id))
+    personsService.remove(id).then(() => {
+      setPersons(persons.filter((person) => person.id !== id));
     }).catch((error) => {
       notification("error", `Information of ${selectedPerson.name} has already been removed from server`);
       setPersons(persons.filter((person) => person.id !== id))
