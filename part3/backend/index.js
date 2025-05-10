@@ -88,19 +88,10 @@ app.post("/api/persons", (request, response) => {
     return;
   }
 
-  if (persons.some((person) => person.name === name)) {
-    response.status(400).json({ error: "name must be unique" });
-    return;
-  }
-
-  const newPerson = {
-    id: Math.floor(Math.random() * 100000000),
-    name,
-    number,
-  };
-
-  persons.push(newPerson);
-  response.status(201).json(newPerson);
+  const newPerson = new Person({ name, number });
+  newPerson.save().then((savedPerson) => {
+    response.status(201).json(savedPerson);
+  });
 });
 
 app.get("/info", (request, response) => {
