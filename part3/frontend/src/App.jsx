@@ -56,6 +56,9 @@ const App = () => {
             setNewName("");
             setNewNumber("");
             notification("success", `Updated ${updatedPerson.name}`);
+          })
+          .catch((error) => {
+            notification("error", error.response.data.error);
           });
       }
       return;
