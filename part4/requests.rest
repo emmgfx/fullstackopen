@@ -1,0 +1,13 @@
+GET http://localhost:3003/api/blogs
+###
+
+POST http://localhost:3003/api/blogs
+content-type: application/json
+
+{
+  "title": "The technology behind Stadiaffinity",
+  "author": "Josep Viciana",
+  "url": "https://www.viciana.me/articles/2024-08-11-the-technology-behind-stadiaffinity",
+  "likes": 0
+}
+###
