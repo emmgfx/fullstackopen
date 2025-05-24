@@ -109,6 +109,25 @@ describe("blogs", () => {
     });
   });
 
+  describe("update of a blog", () => {
+    test("increases the likes counter", async () => {
+      const blogsAtStart = await helper.blogsInDb();
+      const blogToUpdate = blogsAtStart[0];
+
+      const updatedBlog = {
+        ...blogToUpdate,
+        likes: blogToUpdate.likes + 1,
+      };
+
+      const response = await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .send(updatedBlog)
+        .expect(202);
+
+      assert.strictEqual(response.body.likes, blogToUpdate.likes + 1);
+    });
+  });
+
   after(async () => {
     await mongoose.connection.close();
   });
