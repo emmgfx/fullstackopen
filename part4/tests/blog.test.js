@@ -82,6 +82,32 @@ describe("blogs", () => {
       .expect((result) => assert.strictEqual(result.body.likes, 0));
   });
 
+  test("blog addition without title", async () => {
+    const newBlog = {
+      author: "Josep Viciana",
+      url: "https://www.viciana.me/articles/2024-08-11-the-technology-behind-stadiaffinity",
+    };
+
+    await api
+      .post("/api/blogs")
+      .send(newBlog)
+      .expect(400)
+      .expect("Content-Type", /application\/json/);
+  });
+
+  test("blog addition without url", async () => {
+    const newBlog = {
+      title: "Article without url property",
+      author: "Josep Viciana",
+    };
+
+    await api
+      .post("/api/blogs")
+      .send(newBlog)
+      .expect(400)
+      .expect("Content-Type", /application\/json/);
+  });
+
   after(async () => {
     await mongoose.connection.close();
   });
