@@ -67,6 +67,21 @@ describe("blogs", () => {
     assert.strictEqual(response.body.length, initialBlogs.length + 1);
   });
 
+  test("blog addition without likes param", async () => {
+    const newBlog = {
+      title: "Article without likes property",
+      author: "Josep Viciana",
+      url: "https://www.viciana.me/articles/2024-08-11-the-technology-behind-stadiaffinity",
+    };
+
+    await api
+      .post("/api/blogs")
+      .send(newBlog)
+      .expect(201)
+      .expect("Content-Type", /application\/json/)
+      .expect((result) => assert.strictEqual(result.body.likes, 0));
+  });
+
   after(async () => {
     await mongoose.connection.close();
   });
